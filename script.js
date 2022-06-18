@@ -6,6 +6,7 @@ const galleryItem = document.querySelectorAll(`.gallery-item`)
 const galleryImage = document.querySelectorAll(`.gallery-item--image`)
 const modalGalleryWindow = document.getElementById(`modal`)
 const bodySelect = document.querySelector(`body`)
+const newImage = document.createElement(`img`)
 let imgSrc;
 let lastScrollTop = 0;
 let scrollDistance = window.scrollY;
@@ -53,23 +54,24 @@ galleryImage.forEach((img) => {
 
 let modalVisible = () => {
   modalGalleryWindow.classList.add(`modal-about--visible`);
-  const newImage = document.createElement(`img`);
   newImage.setAttribute(`src`, imgSrc)
   disableScroll();
   header.classList.add(`header-hidden`)
 
   modalGalleryWindow.appendChild(newImage)
+}
+
 
   modalGalleryWindow.addEventListener(`click`, () => {
-    modalGalleryWindow.removeChild(newImage)
     modalGalleryWindow.classList.remove(`modal-about--visible`)
+    modalGalleryWindow.removeChild(newImage)
     enableScroll()
-    console.log(`click`)
+    console.log(`document.`)
     header.classList.remove(`header-hidden`)
     header.classList.add(`header-invisible`)
-
   })
-}
+
+
 
 
 
