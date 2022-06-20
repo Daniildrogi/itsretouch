@@ -1,11 +1,13 @@
 // Review 1
 // Общая рекомендация: почитать про форматирование кода и установить eslint
+import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from './node_modules/body-scroll-lock/lib/bodyScrollLock.esm.js';
 
 const header = document.querySelector(`.header`);
 const section = document.querySelector(`.welcome-content`);
 const height = header.offsetHeight;
 const sectionHeight = section.offsetHeight;
 // FIXME Зачем galleryItem? // fixed
+const galleryItem = document.querySelector(`.gallery-item`)
 const galleryImage = document.querySelectorAll(`.gallery-item--image`)
 const gallery = document.querySelector(`.gallery`)
 const modalGalleryWindow = document.getElementById(`modal`)
@@ -32,27 +34,12 @@ document.addEventListener(`scroll`, () => {
     lastScrollTop = scrollDistance;
   });
 
-
-function disableScroll() {
-  // Get the current page scroll position
-  scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-  scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
-
-    // if any scroll is attempted, set this to the previous value
-    window.onscroll = function () {
-      window.scrollTo(scrollLeft, scrollTop);
-    };
-}
-
-function enableScroll() {
-  window.onscroll = function () { };
-}
-
 gallery.addEventListener(`click`, function (e) {
-//  let img = e.target.closest(`galleryImage`)
- modalVisible(e.target.src)
- console.log(`fdsf`)
-})
+// let image = e.target.closest(`img`);
+if (!e.target.closest(`img`))  return;
+modalVisible(e.target.src)
+}
+)
 
 
 // galleryImage.forEach((img) => {
@@ -64,8 +51,8 @@ gallery.addEventListener(`click`, function (e) {
 let modalVisible = (e) => {
   modalGalleryWindow.classList.add(`modal-about--visible`);
   newImage.setAttribute(`src`, e)
-  disableScroll();
-  header.classList.add(`header-hidden`)
+  disableBodyScroll(modalGalleryWindow);
+  header.classList.add(`header-invisible`)
   modalGalleryWindow.appendChild(newImage)
 }
 
@@ -73,12 +60,10 @@ let modalVisible = (e) => {
 modalGalleryWindow.addEventListener(`click`, () => {
   modalGalleryWindow.classList.remove(`modal-about--visible`)
   modalGalleryWindow.removeChild(newImage)
-  enableScroll()
-  header.classList.remove(`header-hidden`)
-  header.classList.add(`header-invisible`)
+  enableBodyScroll(modalGalleryWindow);
 })
 
-document.querySelector('.gallery').addEventListener('click', (e) => {
+document.querySelector('body').addEventListener('click', (e) => {
   console.log('e.t.v', e.target);
 })
 
