@@ -57,7 +57,8 @@ let modalVisible = (e) => {
 }
 
 
-modalGalleryWindow.addEventListener(`click`, () => {
+modalGalleryWindow.addEventListener(`click`, (e) => {
+  if (e.target.closest(`img`))  return;
   modalGalleryWindow.classList.remove(`modal-about--visible`)
   modalGalleryWindow.removeChild(newImage)
   enableBodyScroll(modalGalleryWindow);
