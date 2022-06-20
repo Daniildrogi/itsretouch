@@ -1,32 +1,36 @@
+// Review 1
+// Общая рекомендация: почитать про форматирование кода и установить eslint
+
 const header = document.querySelector(`.header`);
 const section = document.querySelector(`.welcome-content`);
 const height = header.offsetHeight;
 const sectionHeight = section.offsetHeight;
-const galleryItem = document.querySelectorAll(`.gallery-item`)
+// FIXME Зачем galleryItem? // fixed
 const galleryImage = document.querySelectorAll(`.gallery-item--image`)
+const gallery = document.querySelector(`.gallery`)
 const modalGalleryWindow = document.getElementById(`modal`)
-const bodySelect = document.querySelector(`body`)
+// FIXME Зачем bodySelect? // fixed
 const newImage = document.createElement(`img`)
-let imgSrc;
+// FIXME Ты используешь переменную imgSrc только в modalVisible
+// тебе она действительно нужна? Тем более в глобальной области видимости? // fixed
 let lastScrollTop = 0;
 let scrollDistance = window.scrollY;
 
-document.addEventListener(`scroll`, function () {
-  let scrollDistance = window.scrollY;
-  if (scrollDistance >= height) {
-    header.classList.add(`header-invisible`)
-    header.classList.remove(`header-fixed`)
-  }
-  if (scrollDistance <= lastScrollTop) {
-    header.classList.remove(`header-invisible`)
-    header.classList.add(`header-fixed`)
-  }
-  if (scrollDistance === 0) {
-    header.classList.remove(`header-invisible`)
-    header.classList.add(`header-fixed`)
-  }
-  lastScrollTop = scrollDistance
-});
+document.addEventListener(`scroll`, () => {
+    let scrollDistance = window.scrollY;
+    if (scrollDistance >= height) {
+      header.classList.add(`header-invisible`);
+      header.classList.remove(`header-fixed`);
+    }
+
+    // FIXME Дублируется код в теле двух условий
+    // почему бы не if (scrollDistance <= lastScrollTop || scrollDistance === 0) ? // fixed
+    if (scrollDistance <= lastScrollTop || scrollDistance === 0) {
+      header.classList.remove(`header-invisible`);
+      header.classList.add(`header-fixed`);
+    }
+    lastScrollTop = scrollDistance;
+  });
 
 
 function disableScroll() {
@@ -44,32 +48,39 @@ function enableScroll() {
   window.onscroll = function () { };
 }
 
-galleryImage.forEach((img) => {
-  img.addEventListener("click", (e) => {
-    imgSrc = e.target.src;
-    console.log(imgSrc)
-    modalVisible();
-  });
-}); // по клику собираем src картинки, чтоб затем вставить в модальное окно
+gallery.addEventListener(`click`, function (e) {
+//  let img = e.target.closest(`galleryImage`)
+ modalVisible(e.target.src)
+ console.log(`fdsf`)
+})
 
-let modalVisible = () => {
+
+// galleryImage.forEach((img) => {
+//   img.addEventListener("click", (e) => {
+//     modalVisible(e.target.src);
+//   });
+// });
+
+let modalVisible = (e) => {
   modalGalleryWindow.classList.add(`modal-about--visible`);
-  newImage.setAttribute(`src`, imgSrc)
+  newImage.setAttribute(`src`, e)
   disableScroll();
   header.classList.add(`header-hidden`)
-
   modalGalleryWindow.appendChild(newImage)
 }
 
 
-  modalGalleryWindow.addEventListener(`click`, () => {
-    modalGalleryWindow.classList.remove(`modal-about--visible`)
-    modalGalleryWindow.removeChild(newImage)
-    enableScroll()
-    console.log(`document.`)
-    header.classList.remove(`header-hidden`)
-    header.classList.add(`header-invisible`)
-  })
+modalGalleryWindow.addEventListener(`click`, () => {
+  modalGalleryWindow.classList.remove(`modal-about--visible`)
+  modalGalleryWindow.removeChild(newImage)
+  enableScroll()
+  header.classList.remove(`header-hidden`)
+  header.classList.add(`header-invisible`)
+})
+
+document.querySelector('.gallery').addEventListener('click', (e) => {
+  console.log('e.t.v', e.target);
+})
 
 
 

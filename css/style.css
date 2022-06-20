@@ -133,6 +133,7 @@ overflow: hidden;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 2rem;
+
 }
 
 @media (max-width: 950px) {
@@ -155,6 +156,10 @@ overflow: hidden;
 .gallery-item--image {
   max-width: 100%;
   max-height: 100%;
+}
+
+.gallery-item--image__horizontal {
+  grid-column: span 2;
 }
 
 .modal-about {
