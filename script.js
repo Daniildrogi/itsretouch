@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/extensions
-import { disableBodyScroll, clearAllBodyScrollLocks } from './node_modules/body-scroll-lock/lib/bodyScrollLock.esm.js';
+import { disableBodyScroll, enableBodyScroll } from './node_modules/body-scroll-lock/lib/bodyScrollLock.esm.js';
 
 const header = document.querySelector('.header');
 const height = header.offsetHeight;
@@ -22,6 +22,8 @@ function headerEvent() {
   }
   lastScrollTop = scrollDistance;
 }
+// Добавляем headerEvent на скролл
+
 document.addEventListener('scroll', () => {
   headerEvent();
 });
@@ -43,11 +45,7 @@ modalGalleryWindow.addEventListener('click', (e) => {
   if (e.target.closest('img')) return;
   modalGalleryWindow.classList.remove('modal-about--visible');
   modalGalleryWindow.removeChild(newImage);
-  document.removeEventListener('scroll', () => {
-    headerEvent();
-  });
-  clearAllBodyScrollLocks(modalGalleryWindow);
-  document.addEventListener('scroll', () => {
-    headerEvent();
-  });
+  enableBodyScroll(modalGalleryWindow);
 });
+
+// Осталось понять, как сделать так, чтобы header не появлялся после закрытия модального окна ?
