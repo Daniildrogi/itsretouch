@@ -1,7 +1,6 @@
 import {
     disableBodyScroll,
     enableBodyScroll,
-
     // eslint-disable-next-line import/extensions
 } from "./node_modules/body-scroll-lock/lib/bodyScrollLock.esm.js"
 
