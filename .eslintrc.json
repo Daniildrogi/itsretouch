@@ -5,13 +5,9 @@
     },
     "extends": [
         "airbnb-base",
-<<<<<<< Updated upstream
+        "airbnb",
         "prettier",
         "plugin:import/recommended"
-=======
-        "plugin:import/recommended",
-        "prettier"
->>>>>>> Stashed changes
     ],
     "parserOptions": {
         "ecmaVersion": "latest",

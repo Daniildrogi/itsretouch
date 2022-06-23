@@ -1,3 +1,6 @@
+// TODO -  Светлую и темную тему
+// TODO - Слайдер в модальном окне на всю галлерею.
+
 import {
     disableBodyScroll,
     enableBodyScroll,
@@ -9,9 +12,11 @@ const height = header.offsetHeight
 const gallery = document.querySelector(".gallery")
 const modalGalleryWindow = document.getElementById("modal")
 const newImage = document.createElement("img")
+const icon = document.querySelector(".icon")
+const menu = document.querySelector(".menu")
 let lastScrollTop = 0
 
-// Всплывающий Header
+//  Всплывающий Header
 
 function headerEvent() {
     const scrollDistance = window.scrollY
@@ -25,11 +30,19 @@ function headerEvent() {
     }
     lastScrollTop = scrollDistance
 }
-// Добавляем headerEvent на скролл
+//  * Добавляем headerEvent на скролл
 
 document.addEventListener("scroll", () => {
     headerEvent()
 })
+
+// * Выезжающее меню max-width:768px
+
+icon.addEventListener(`click`, () => {
+    menu.classList.toggle(`nav-responsive`)
+})
+
+// * Popup Окно
 
 const modalVisible = (e) => {
     modalGalleryWindow.classList.add("modal-about--visible")
@@ -51,4 +64,7 @@ modalGalleryWindow.addEventListener("click", (e) => {
     enableBodyScroll(modalGalleryWindow)
 })
 
-// Осталось понять, как сделать так, чтобы header не появлялся после закрытия модального окна ?
+document.addEventListener(`click`, (e) => {
+    console.log(e.target)
+})
+// ? Осталось понять, как сделать так, чтобы header не появлялся после закрытия модального окна
