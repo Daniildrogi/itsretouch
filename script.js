@@ -1,4 +1,4 @@
-// TODO -  Светлую и темную тему
+// TODO -  Светлую и темную тему - DONE
 // TODO - Слайдер в модальном окне на всю галлерею.
 
 import {
@@ -14,11 +14,17 @@ const modalGalleryWindow = document.getElementById("modal")
 const newImage = document.createElement("img")
 const icon = document.querySelector(".icon")
 const menu = document.querySelector(".menu")
+// const next = document.querySelector(".next") // * Стрелки кнопки для галереи
+// const previous = document.querySelector(".previous") // * Стрелки кнопки для галереи
+const allImages = document.querySelectorAll(".gallery-item img")
+// const arrayImages = [...allImages]
+const darkThemeButton = document.querySelector(".dark-theme")
+const body = document.querySelector("body")
 let lastScrollTop = 0
 
-//  Всплывающий Header
+// *  Всплывающий Header
 
-function headerEvent() {
+const headerEvent = () => {
     const scrollDistance = window.scrollY
     if (scrollDistance >= height) {
         header.classList.add("header-invisible")
@@ -64,9 +70,27 @@ modalGalleryWindow.addEventListener("click", (e) => {
     enableBodyScroll(modalGalleryWindow)
 })
 
-document.addEventListener(`click`, (e) => {
-    console.log(e.target)
-})
-// ? Осталось понять, как сделать так, чтобы header не появлялся после закрытия модального окна
+// * Переключение темы
 
-// ? Тест новой ветки
+const darkTheme = () => {
+    if (
+        darkThemeButton.classList.contains("fa-toggle-off") &&
+        body.classList.contains("light")
+    ) {
+        darkThemeButton.classList.remove("fa-toggle-off")
+        darkThemeButton.classList.add("fa-toggle-on")
+        body.classList.remove("light")
+        body.classList.add("dark")
+    } else {
+        darkThemeButton.classList.add("fa-toggle-off")
+        darkThemeButton.classList.remove("fa-toggle-on")
+        body.classList.add("light")
+        body.classList.remove("dark")
+    }
+}
+
+darkThemeButton.addEventListener("click", () => {
+    darkTheme()
+})
+
+// ? Осталось понять, как сделать так, чтобы header не появлялся после закрытия модального окна
