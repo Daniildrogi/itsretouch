@@ -11,11 +11,10 @@ const header = document.querySelector(".header")
 const height = header.offsetHeight
 const gallery = document.querySelector(".gallery")
 const modalGalleryWindow = document.getElementById("modal")
+const newImageWrapper = document.createElement("div")
 const newImage = document.createElement("img")
 const icon = document.querySelector(".icon")
 const menu = document.querySelector(".menu")
-const nextBtn = document.querySelector(".next") // * Стрелки кнопки для галереи
-const previousBtn = document.querySelector(".previous") // * Стрелки кнопки для галереи
 const allImages = document.querySelectorAll(".gallery-item img")
 const arrayImages = [...allImages]
 const darkThemeButton = document.querySelector(".dark-theme")
@@ -48,6 +47,34 @@ icon.addEventListener(`click`, () => {
     menu.classList.toggle(`nav-responsive`)
 })
 
+// * * Слайдер модальной галереи
+
+let findNextImage = function (element) {
+    if (element.src == newImage.src) return element
+}
+
+const nextSlide = () => {
+    let nextImage = arrayImages.findIndex(findNextImage)
+    nextImage++
+    if (nextImage == arrayImages.length) nextImage = 0
+    newImage.setAttribute("src", arrayImages[nextImage].src)
+}
+
+const prevSlide = () => {
+    let prevImage = arrayImages.findIndex(findNextImage)
+    prevImage--
+    if (prevImage == -1) prevImage = arrayImages.length - 1
+    newImage.setAttribute("src", arrayImages[prevImage].src)
+}
+
+document.addEventListener("keyup", (e) => {
+    if (e.key == "ArrowRight") nextSlide()
+})
+
+document.addEventListener("keyup", (e) => {
+    if (e.key == "ArrowLeft") prevSlide()
+})
+
 // * Popup Окно
 
 const modalVisible = (e) => {
@@ -55,8 +82,19 @@ const modalVisible = (e) => {
     newImage.setAttribute("src", e)
     disableBodyScroll(modalGalleryWindow)
     header.classList.add("header-invisible")
-    modalGalleryWindow.appendChild(newImage)
+    modalGalleryWindow.appendChild(newImageWrapper)
+    newImageWrapper.classList.add("modal-image--wrapper")
+    newImageWrapper.appendChild(newImage)
+    newImage.classList.add("modalImg")
 }
+
+newImage.addEventListener("click", (b) => {
+    if (b.offsetX < b.target.width / 2) prevSlide()
+    if (b.offsetX > b.target.width / 2) nextSlide()
+    console.log(b.offsetX)
+    console.log(b.target.width / 2)
+    console.log(arrayImages)
+})
 
 gallery.addEventListener("click", (e) => {
     if (!e.target.closest("img")) return
@@ -67,7 +105,7 @@ const closeModal = (e) => {
     if (e.target.closest("img")) return
     if (e.target.closest("a")) return
     modalGalleryWindow.classList.remove("modal-about--visible")
-    modalGalleryWindow.removeChild(newImage)
+    modalGalleryWindow.removeChild(newImageWrapper)
     enableBodyScroll(modalGalleryWindow)
 }
 
@@ -101,38 +139,6 @@ const darkTheme = () => {
 
 darkThemeButton.addEventListener("click", () => {
     darkTheme()
-})
-
-// * * Слайдер модальной галереи
-
-let findNextImage = function (element) {
-    if (element.src == newImage.src) return element
-}
-
-const nextSlide = () => {
-    let nextImage = arrayImages.findIndex(findNextImage)
-    nextImage++
-    if (nextImage == arrayImages.length) nextImage = 0
-    newImage.setAttribute("src", arrayImages[nextImage].src)
-}
-
-const prevSlide = () => {
-    let prevImage = arrayImages.findIndex(findNextImage)
-    prevImage--
-    if (prevImage == -1) prevImage = arrayImages.length - 1
-    newImage.setAttribute("src", arrayImages[prevImage].src)
-}
-
-nextBtn.addEventListener("click", () => nextSlide())
-
-previousBtn.addEventListener("click", () => prevSlide())
-
-document.addEventListener("keyup", (e) => {
-    if (e.key == "ArrowRight") nextSlide()
-})
-
-document.addEventListener("keyup", (e) => {
-    if (e.key == "ArrowLeft") prevSlide()
 })
 
 // ? Осталось понять, как сделать так, чтобы header не появлялся после закрытия модального окна
