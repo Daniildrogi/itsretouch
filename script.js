@@ -1,5 +1,5 @@
 // TODO -  Светлую и темную тему - DONE
-// TODO - Слайдер в модальном окне на всю галлерею.
+// TODO - Слайдер в модальном окне на всю галлерею. - DONE
 
 import {
     disableBodyScroll,
@@ -14,10 +14,10 @@ const modalGalleryWindow = document.getElementById("modal")
 const newImage = document.createElement("img")
 const icon = document.querySelector(".icon")
 const menu = document.querySelector(".menu")
-// const next = document.querySelector(".next") // * Стрелки кнопки для галереи
-// const previous = document.querySelector(".previous") // * Стрелки кнопки для галереи
+const nextBtn = document.querySelector(".next") // * Стрелки кнопки для галереи
+const previousBtn = document.querySelector(".previous") // * Стрелки кнопки для галереи
 const allImages = document.querySelectorAll(".gallery-item img")
-// const arrayImages = [...allImages]
+const arrayImages = [...allImages]
 const darkThemeButton = document.querySelector(".dark-theme")
 const body = document.querySelector("body")
 let lastScrollTop = 0
@@ -42,7 +42,7 @@ document.addEventListener("scroll", () => {
     headerEvent()
 })
 
-// * Выезжающее меню max-width:768px
+// * Выезжающее меню max-width:900px
 
 icon.addEventListener(`click`, () => {
     menu.classList.toggle(`nav-responsive`)
@@ -63,11 +63,21 @@ gallery.addEventListener("click", (e) => {
     modalVisible(e.target.src)
 })
 
-modalGalleryWindow.addEventListener("click", (e) => {
+const closeModal = (e) => {
     if (e.target.closest("img")) return
+    if (e.target.closest("a")) return
     modalGalleryWindow.classList.remove("modal-about--visible")
     modalGalleryWindow.removeChild(newImage)
     enableBodyScroll(modalGalleryWindow)
+}
+
+modalGalleryWindow.addEventListener("click", (e) => closeModal(e))
+document.addEventListener("keyup", (e) => {
+    if (
+        e.key == "Escape" &&
+        modalGalleryWindow.classList.contains("modal-about--visible")
+    )
+        closeModal(e)
 })
 
 // * Переключение темы
@@ -91,6 +101,38 @@ const darkTheme = () => {
 
 darkThemeButton.addEventListener("click", () => {
     darkTheme()
+})
+
+// * * Слайдер модальной галереи
+
+let findNextImage = function (element) {
+    if (element.src == newImage.src) return element
+}
+
+const nextSlide = () => {
+    let nextImage = arrayImages.findIndex(findNextImage)
+    nextImage++
+    if (nextImage == arrayImages.length) nextImage = 0
+    newImage.setAttribute("src", arrayImages[nextImage].src)
+}
+
+const prevSlide = () => {
+    let prevImage = arrayImages.findIndex(findNextImage)
+    prevImage--
+    if (prevImage == -1) prevImage = arrayImages.length - 1
+    newImage.setAttribute("src", arrayImages[prevImage].src)
+}
+
+nextBtn.addEventListener("click", () => nextSlide())
+
+previousBtn.addEventListener("click", () => prevSlide())
+
+document.addEventListener("keyup", (e) => {
+    if (e.key == "ArrowRight") nextSlide()
+})
+
+document.addEventListener("keyup", (e) => {
+    if (e.key == "ArrowLeft") prevSlide()
 })
 
 // ? Осталось понять, как сделать так, чтобы header не появлялся после закрытия модального окна

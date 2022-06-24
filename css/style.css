@@ -1,6 +1,6 @@
 .light {
-  --foreground-color: #000000;
-  --background-color: #ffffff;
+    --foreground-color: #000000;
+    --background-color: #ffffff;
 }
 
 .dark {
@@ -93,7 +93,7 @@ h1 {
     cursor: pointer;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     .menu {
         display: none;
     }
