@@ -238,45 +238,59 @@ h1 {
     margin-top: -1px;
 }
 
-.modal-about img {
-    max-width: 90%;
-    max-height: 90%;
+.modal-image--wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.modal-image--wrapper::after:hover {
+  border: none;
 }
 
 .modal-about--visible {
-    visibility: visible;
+  visibility: visible;
 }
 
-.previous {
-    width: 100px;
-    border: solid rgb(84, 84, 84);
-    border-width: 0 0.3rem 0.3rem 0;
-    display: inline-block;
-    padding: 3px;
-    width: 2rem;
-    height: 2rem;
-    position: fixed;
-    top: 50%;
-    left: 25%;
-    cursor: pointer;
-    z-index: 100;
-    transform: rotate(135deg);
-    -webkit-transform: rotate(135deg);
+.modalImg {
+  max-width: 90vw;
+  max-height: 90vh;
+  display: block;
 }
 
-.next {
-    width: 100px;
-    border: solid rgb(84, 84, 84);
-    border-width: 0 0.3rem 0.3rem 0;
+
+
+.hover-left::before {
+    content: "<";
+font-size: 4rem;
+
+    opacity: 0.9;
+    transition: 200ms ease-in-out;
     display: inline-block;
-    padding: 3px;
-    width: 2rem;
-    height: 2rem;
-    position: fixed;
+
+    position: absolute;
     top: 50%;
-    left: 75%;
-    cursor: pointer;
+    left: 5%;
+
     z-index: 100;
-    transform: rotate(-45deg);
-    -webkit-transform: rotate(-45deg);
 }
+
+
+
+.hover-right::before {
+    content: ">";
+    font-size: 4rem;
+    opacity: 0.9;
+    transition-property: all;
+    transition: 200ms ease-in-out;
+    display: inline-block;
+
+    position: absolute;
+    top: 50%;
+    right: 5%;
+
+    z-index: 100;
+}
+
+
