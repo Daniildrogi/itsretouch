@@ -127,6 +127,11 @@ h1 {
 .dark-theme {
     cursor: pointer;
     color: var(--foreground-color);
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+    font-weight: 700;
+    font-size: 2rem;
 }
 
 /* Welcome Photos */
@@ -215,9 +220,9 @@ h1 {
 }
 
 .gallery-item--image:hover {
-    transform: translateY(-0.1rem) translateX(-0.1rem);
-    box-shadow: 0.4rem 0.4rem 2rem 0.1rem rgba(0, 0, 0, 0.15);
-    transition: 300ms ease-in;
+    transform: scale(1.01);
+    overflow: hidden;
+    transition: 100ms ease-in;
 }
 
 .gallery-item--image__horizontal {
@@ -245,12 +250,9 @@ h1 {
     position: relative;
 }
 
-.modal-image--wrapper::after:hover {
-  border: none;
-}
-
 .modal-about--visible {
   visibility: visible;
+
 }
 
 .modalImg {

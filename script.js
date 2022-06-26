@@ -28,7 +28,7 @@ const headerEvent = () => {
         header.classList.add("header-invisible")
         header.classList.remove("header-fixed")
     }
-    if (scrollDistance <= lastScrollTop || scrollDistance === 0) {
+    if (scrollDistance <= lastScrollTop && scrollDistance <= height * 2) {
         header.classList.remove("header-invisible")
         header.classList.add("header-fixed")
     }
